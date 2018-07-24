@@ -3,15 +3,21 @@ const router = express.Router();
 const Book = require("../models/book");
 const mongoose = require("mongoose");
 
+const addTryCatchBlock = (asyncExpressFunction) => {
+  return async (req, res, next) => {
+    try {
+      await asyncExpressFunction(req, res, next)
+    } catch (error) {
+      next(error)
+    }
+  }
+ }
+
 /* GET books listing. */
-router.get("/", async (req, res, next) => {
-  try {
+router.get("/", addTryCatchBlock( async (req, res, next) => {
     const books = await Book.find().populate("author");
     res.json(books);
-  } catch (error) {
-    next(error);
-  }
-});
+}));
 
 router.get("/:id", (req, res, next) => {
   res.json({ message: `get book with id ${req.params.id}` });
