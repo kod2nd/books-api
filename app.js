@@ -6,7 +6,7 @@ const index = require("./routes/index");
 const books = require("./routes/books.js");
 const authors = require("./routes/authors.js");
 
-var whitelist = ['http://localhost:3000/', 'https://kod2nd-books-ui.herokuapp.com/']
+var whitelist = ['http://localhost:3001/', 'https://kod2nd-books-ui.herokuapp.com/']
 var corsOptions = {
     origin: whitelist
 }
@@ -14,7 +14,7 @@ var corsOptions = {
 const app = express();
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.use("/", index);
 app.use("/books", books);
