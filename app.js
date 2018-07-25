@@ -11,10 +11,16 @@ var corsOptions = {
     origin: whitelist
 }
 
+const setCors = () => {
+    if (process.env.NODE_ENV === "production"){
+       return cors({origin: process.env.ALLOWED_ORIGIN})
+    }  return cors()
+}
+
 const app = express();
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors())
+app.use(setCors())
 
 app.use("/", index);
 app.use("/books", books);
